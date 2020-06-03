@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyPaser = require('body-parser')
 const keys = require('./config/keys');
 require('./models/User');
 require('./services/passport');
@@ -16,6 +17,7 @@ require('./services/passport');
 mongoose.connect(keys.mongoURI);
 
 const app = express();
+app.use(bodyPaser.json());
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -24,8 +26,10 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
 //authRoutes(app);
 require('./routes/authRoutes')(app); // require auth routes returns a function with a call back functioh  with app function
+require('./routes/billingRoutes')(app);
 //inside one app you can have mny
 // Route Handler
 //app.get('/', (req, res) => {  // req incoming request res is the response

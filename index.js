@@ -26,7 +26,14 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
 
+    const path = require('path');
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(_dirname, 'client', 'build', 'index.html'));
+    });
+}
 //authRoutes(app);
 require('./routes/authRoutes')(app); // require auth routes returns a function with a call back functioh  with app function
 require('./routes/billingRoutes')(app);

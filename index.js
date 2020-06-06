@@ -8,6 +8,7 @@ const passport = require('passport');
 const bodyPaser = require('body-parser')
 const keys = require('./config/keys');
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 
@@ -37,6 +38,7 @@ if (process.env.NODE_ENV === 'production') {
 //authRoutes(app);
 require('./routes/authRoutes')(app); // require auth routes returns a function with a call back functioh  with app function
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 //inside one app you can have mny
 // Route Handler
 //app.get('/', (req, res) => {  // req incoming request res is the response
